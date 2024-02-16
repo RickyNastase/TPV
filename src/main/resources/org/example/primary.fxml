@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="25.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="fecha" text="Fecha: ">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+   </top>
+   <right>
+      <ToolBar fx:id="toolbar" orientation="VERTICAL" BorderPane.alignment="CENTER">
+         <items>
+            <VBox alignment="CENTER" prefHeight="80.0">
+               <children>
+                  <Line endX="60.0" layoutX="16.0" layoutY="95.0" opacity="0.48" />
+                  <ImageView fx:id="sala" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../imgProductos/sala.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="SALA">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="60.0" opacity="0.48" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="80.0">
+               <children>
+                  <ImageView fx:id="sala1" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../imgProductos/pagar.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="PAGAR">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="60.0" opacity="0.48" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+         </items>
+      </ToolBar>
+   </right>
+   <left>
+      <TableView fx:id="tablaProductos" prefHeight="346.0" prefWidth="512.0" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <VBox id="VBox" alignment="CENTER" prefHeight="346.0" prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
+         <StackPane alignment="CENTER" layoutX="20.0" layoutY="55.0">
+            <children>
+               <Rectangle fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="151.0" />
+               <Text fx:id="total" text="Total: ">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Text>
+            </children>
+         </StackPane>
+
+
+         <!--Região onde ficam os números digitados e os resultados-->
+         <StackPane alignment="CENTER">
+            <Rectangle fx:id="cantidad" fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="151.0" />
+            <Text fx:id="total">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Text>
+         </StackPane>
+
+         <!--O HBox coloca os elementos na mesma linha. O próximo elemento sempre entra a direita do anterior-->
+         <HBox alignment="CENTER" spacing="10" />
+
+         <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="siete" prefWidth="50" text="7" />
+            <Button fx:id="ocho" prefWidth="50" text="8" />
+            <Button fx:id="nueve" prefWidth="50" text="9" />
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="cuatro" prefWidth="50" text="4" />
+            <Button fx:id="cinco" prefWidth="50" text="5" />
+            <Button fx:id="seis" prefWidth="50" text="6" />
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="uno" prefWidth="50" text="1" />
+            <Button fx:id="dos" prefWidth="50" text="2" />
+            <Button fx:id="tres" prefWidth="50" text="3" />
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="cero" prefWidth="50.0" text="0" />
+            <Button fx:id="borrar" layoutX="115.0" layoutY="10.0" prefWidth="50.0" text="CE" />
+            <Button fx:id="aceptar" layoutX="114.0" layoutY="10.0" prefWidth="50.0" text="✓" />
+         </HBox>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox maxHeight="300.0" minHeight="250.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" fillWidth="false" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="cafes" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <image>
+                                    <Image url="@../../imgProductos/CAFES/capuchino.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="CAFÉS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="vinos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <image>
+                                    <Image url="@../../imgProductos/vinos.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="VINOS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="80.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="refrescos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <image>
+                                    <Image url="@../../imgProductos/refrescos.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="REFRESCOS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="80.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="alcohol" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <image>
+                                    <Image url="@../../imgProductos/alcohol.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="ALCOHOL" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="cervezas" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <image>
+                                    <Image url="@../../imgProductos/cervezas.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="CERVEZAS" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="43.0" layoutY="17.0">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="desayunos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgProductos/desayunos.png" />
+                                 </image></ImageView>
+                              <Label text="DESAYUNOS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="bocadillos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgProductos/bocadillos.png" />
+                                 </image></ImageView>
+                              <Label text="BOCADILLOS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="80.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="montaditos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgProductos/montaditos.png" />
+                                 </image></ImageView>
+                              <Label text="MONTADITOS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="80.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="raciones" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgProductos/raciones.png" />
+                                 </image></ImageView>
+                              <Label text="RACIONES" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="220.0" layoutY="10.0">
+                           <children>
+                              <ImageView fx:id="postres" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgProductos/tiramisu.png" />
+                                 </image></ImageView>
+                              <Label text="POSTRES" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <GridPane fx:id="grid" HBox.hgrow="ALWAYS">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
