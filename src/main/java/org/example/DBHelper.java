@@ -7,10 +7,8 @@ import java.util.List;
 public class DBHelper {
     private Connection con;
     private Statement s;
-    private List<Producto> productos;
 
     public DBHelper() {
-        productos = new ArrayList<>();
         conexion();
     }
 
@@ -30,6 +28,7 @@ public class DBHelper {
     }
 
     public List<Producto> getProductos(String categoria) {
+        List<Producto> productos = new ArrayList<>();
         try {
             ResultSet rs = s.executeQuery("select * from productos where categoria like '" + categoria + "'");
             while (rs.next()) {

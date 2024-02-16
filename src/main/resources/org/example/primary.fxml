@@ -151,7 +151,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/CAFES/capuchino.png" />
+                                    <Image url="@../../imgProductos/cafes/capuchino.png" />
                                  </image>
                               </ImageView>
                               <Label text="CAFÉS" />
@@ -280,7 +280,7 @@
                            <children>
                               <ImageView fx:id="postres" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/tiramisu.png" />
+                                    <Image url="@../../imgProductos/postres/tiramisu.png" />
                                  </image></ImageView>
                               <Label text="POSTRES" />
                            </children>
