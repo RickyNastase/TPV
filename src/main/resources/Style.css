@@ -1,0 +1,13 @@
+.atras{
+    -fx-background-color: #F51720;
+     -fx-text-fill: #FFFFFF;
+     -fx-font-family: "Times New Roman";
+     -fx-font-size: 18px;
+     -fx-background-radius: 10 10 10 10;
+     -fx-border-radius: 10 10 10 10;
+}
+
+.mesas{
+    -fx-background-color: transparent;
+    -fx-font-size: 25px;
+}

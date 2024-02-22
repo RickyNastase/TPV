@@ -27,12 +27,61 @@ public class DBHelper {
         }
     }
 
-    public List<Producto> getProductos(String categoria) {
+    public void borrarMesa(int idMesa) {
+        try {
+            s.execute("delete from consumicion where mesa = " + idMesa);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getOcupada(int idMesa) {
+        try {
+            ResultSet rs = s.executeQuery("select ocupada from mesas where id = " + idMesa);
+            if (rs.next()) {
+                return rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void setOcupada(int idMesa, boolean ocupada) {
+        try {
+            s.execute("update mesas set ocupada = " + ocupada + " where id = " + idMesa);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addProductoMesa(String nombre, int mesa) {
+        try {
+            ResultSet rs1 = s.executeQuery("select codigo from productos where nombre like '" + nombre + "'");
+            rs1.next();
+            int id = rs1.getInt(1);
+            ResultSet rs = s.executeQuery("select * from consumicion where producto = " + id + " and mesa = " + mesa);
+            if (rs.next()) {
+                s.execute("update consumicion set cantidad = cantidad + 1 where id = " + rs.getInt(1));
+            } else {
+                s.execute("insert into consumicion (mesa,producto,cantidad) values (" + mesa + "," + id + "," + 1 + ")");
+            }
+            setOcupada(mesa, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Producto> getProductosMesa(int idMesa) {
         List<Producto> productos = new ArrayList<>();
         try {
-            ResultSet rs = s.executeQuery("select * from productos where categoria like '" + categoria + "'");
+            ResultSet rs = s.executeQuery("select producto,cantidad from consumicion where mesa = " + idMesa);
+            Statement s2 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             while (rs.next()) {
-                productos.add(new Producto(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4)));
+                ResultSet rs2 = s2.executeQuery("select * from productos where codigo = " + rs.getInt(1));
+                if (rs2.next()) {
+                    productos.add(new Producto(rs2.getInt(1), rs2.getString(2), rs2.getDouble(3), rs2.getString(4), rs.getInt(2)));
+                }
             }
             rs.close();
         } catch (Exception e) {

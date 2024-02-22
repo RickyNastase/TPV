@@ -36,13 +36,14 @@ public class PrimaryController {
     @FXML
     private GridPane grid;
     @FXML
-    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres;
+    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres, pagar;
     private DBHelper db;
+    private int idMesa;
 
     @FXML
     private void verSala() {
         try {
-            App.setRoot("secondary");
+            App.setRoot("sala");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,6 +52,7 @@ public class PrimaryController {
     @FXML
     public void initialize() {
         db = new DBHelper();
+        idMesa = App.idMesa;
         setFecha();
         grid.setAlignment(Pos.CENTER);
 
@@ -58,22 +60,32 @@ public class PrimaryController {
         TableColumn<Producto, String> colNombre = new TableColumn<>("Nombre");
         TableColumn<Producto, Double> colPrecio = new TableColumn<>("Precio");
         TableColumn<Producto, Integer> colCantidad = new TableColumn<>("Cantidad");
-        TableColumn<Producto, Double> colImporte = new TableColumn<>("Importe");
 
-        tablaProductos.getColumns().addAll(colCodigo, colNombre, colPrecio, colCantidad, colImporte);
+        tablaProductos.getColumns().addAll(colCodigo, colNombre, colPrecio, colCantidad);
 
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        colImporte.setCellValueFactory(new PropertyValueFactory<>("importe"));
 
         handlers();
+        tablaProductos.getItems().clear();
+        tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
     }
 
-    private void datosTabla(List<Producto> productos) {
+    private void limpiarTabla() {
         tablaProductos.getItems().clear();
-        tablaProductos.getItems().addAll(productos);
+    }
+
+    private void cargarTabla() {
+        tablaProductos.getItems().clear();
+        tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
+    }
+
+    private void addProducto(String nombreProducto) {
+        db.addProductoMesa(nombreProducto, idMesa);
+        tablaProductos.getItems().clear();
+        tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
     }
 
     private void setFecha() {
@@ -91,10 +103,18 @@ public class PrimaryController {
             }
         });
 
+        pagar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                tablaProductos.getItems().clear();
+                db.borrarMesa(idMesa);
+                db.setOcupada(idMesa,false);
+            }
+        });
+
         cafes.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                datosTabla(db.getProductos("cafes"));
                 productosGrid("cafes");
             }
         });
@@ -167,7 +187,17 @@ public class PrimaryController {
                     img.setFitWidth(60);
                     img.setPreserveRatio(true);
                     Label nombre = new Label(imagen.getName());
-                    VBox vb = new VBox(img,nombre);
+
+                    img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            String[] nombre = imagen.getName().split(".png");
+                            String p = nombre[0];
+                            addProducto(p);
+                        }
+                    });
+
+                    VBox vb = new VBox(img, nombre);
                     vb.setAlignment(Pos.CENTER);
                     grid.add(vb, column, row);
                     if (column == 3) {
