@@ -27,6 +27,44 @@ public class DBHelper {
         }
     }
 
+    public double calcularTotal(int idMesa) {
+        double total = 0;
+        try {
+            ResultSet rs1 = s.executeQuery("select producto,cantidad from consumicion where mesa = " + idMesa);
+            if (rs1.next()) {
+                do {
+                    int idProducto = rs1.getInt(1);
+                    int cantidad = rs1.getInt(2);
+                    Statement s2 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    ResultSet rs2 = s2.executeQuery("select precio from productos where codigo = " + idProducto);
+                    if (rs2.next()) {
+                        double precio = rs2.getDouble(1);
+                        total += cantidad * precio;
+                    }
+                } while (rs1.next());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public void eliminarConsumicion(int idMesa, int producto) {
+        try {
+            s.execute("delete from consumicion where mesa = " + idMesa + " and producto = " + producto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void aniadirCantidad(int cantidad, int idMesa, int producto) {
+        try {
+            s.execute("update consumicion set cantidad = " + cantidad + " where mesa = " + idMesa + " and producto = " + producto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void borrarMesa(int idMesa) {
         try {
             s.execute("delete from consumicion where mesa = " + idMesa);

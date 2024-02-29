@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" stylesheets="@../../Style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SalaController">
    <children>
@@ -12,37 +13,40 @@
             <Image url="@../../imgProductos/comedor.png" />
          </image>
       </ImageView>
-      <Button fx:id="mesa1" mnemonicParsing="false" onAction="#mesa1" styleClass="mesas" text="1">
+      <Button fx:id="mesa1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="1">
          <StackPane.margin>
             <Insets bottom="360.0" right="550.0" />
          </StackPane.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
       </Button>
-      <Button fx:id="mesa5" layoutX="92.0" layoutY="83.0" mnemonicParsing="false" styleClass="mesas" text="5">
+      <Button fx:id="mesa5" layoutX="92.0" layoutY="83.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="5">
          <StackPane.margin>
             <Insets bottom="50.0" right="485.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa2" layoutX="92.0" layoutY="83.0" mnemonicParsing="false" styleClass="mesas" text="2">
+      <Button fx:id="mesa2" layoutX="92.0" layoutY="83.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="2">
          <StackPane.margin>
             <Insets bottom="360.0" right="175.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa6" layoutX="247.0" layoutY="83.0" mnemonicParsing="false" styleClass="mesas" text="6">
+      <Button fx:id="mesa6" layoutX="247.0" layoutY="83.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="6">
          <StackPane.margin>
             <Insets bottom="50.0" right="175.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa3" layoutX="247.0" layoutY="83.0" mnemonicParsing="false" styleClass="mesas" text="3">
+      <Button fx:id="mesa3" layoutX="247.0" layoutY="83.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="3">
          <StackPane.margin>
             <Insets bottom="360.0" left="143.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa7" layoutX="406.0" layoutY="83.0" mnemonicParsing="false" styleClass="mesas" text="7">
+      <Button fx:id="mesa7" layoutX="406.0" layoutY="83.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="7">
          <StackPane.margin>
             <Insets bottom="50.0" left="135.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa4" layoutX="402.0" layoutY="223.0" mnemonicParsing="false" styleClass="mesas" text="4">
+      <Button fx:id="mesa4" layoutX="402.0" layoutY="223.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="4">
          <StackPane.margin>
             <Insets bottom="360.0" left="460.0" />
          </StackPane.margin>
@@ -52,22 +56,22 @@
             <Insets bottom="500.0" left="700.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa71" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" styleClass="mesas" text="8">
+      <Button fx:id="mesa8" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="8">
          <StackPane.margin>
             <Insets bottom="120.0" left="550.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa72" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" styleClass="mesas" text="11">
+      <Button fx:id="mesa11" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="11">
          <StackPane.margin>
             <Insets left="235.0" top="225.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa73" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" styleClass="mesas" text="9">
+      <Button fx:id="mesa9" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="9">
          <StackPane.margin>
             <Insets right="430.0" top="225.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="mesa74" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" styleClass="mesas" text="10">
+      <Button fx:id="mesa10" layoutX="466.0" layoutY="248.0" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="10">
          <StackPane.margin>
             <Insets right="100.0" top="225.0" />
          </StackPane.margin>

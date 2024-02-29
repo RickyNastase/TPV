@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -7,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class SalaController {
-    private List<Integer> mesas;
     DBHelper db;
     @FXML
     private void initialize(){
@@ -23,12 +23,13 @@ public class SalaController {
     }
 
     @FXML
-    private void mesa1(){
+    private void mesaSeleccionada(ActionEvent event){
+        Button mesa = (Button) event.getSource();
+        App.idMesa = Integer.parseInt(mesa.getText());
         try {
-            App.idMesa = 1;
             App.setRoot("primary");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

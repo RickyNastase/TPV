@@ -12,25 +12,28 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class PrimaryController {
     @FXML
     private Label fecha;
     @FXML
-    private TableView tablaProductos;
+    private Label cantidad;
+    @FXML
+    private Label total;
+    @FXML
+    private TableView<Producto> tablaProductos;
     @FXML
     private ImageView sala;
     @FXML
@@ -69,17 +72,53 @@ public class PrimaryController {
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
         handlers();
-        tablaProductos.getItems().clear();
-        tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
+        cargarTabla();
     }
 
-    private void limpiarTabla() {
-        tablaProductos.getItems().clear();
+    @FXML
+    private void borrar() {
+        cantidad.setText("");
+    }
+
+    private void setTotal() {
+        total.setText(Double.toString(db.calcularTotal(idMesa)) + "€");
+    }
+
+    @FXML
+    private void eliminarProducto() {
+        Producto p = tablaProductos.getSelectionModel().getSelectedItem();
+        if (p != null) {
+            db.eliminarConsumicion(idMesa, p.getCodigo());
+            cargarTabla();
+        }
+    }
+
+    @FXML
+    private void setCantidad(ActionEvent event) {
+        Button boton = (Button) event.getSource();
+        if (cantidad.getText().isEmpty() & boton.getText().equals("0")) {
+        } else {
+            cantidad.setText(cantidad.getText() + boton.getText());
+        }
+    }
+
+    @FXML
+    private void aceptar() {
+        if (!cantidad.getText().isEmpty()) {
+            int cant = Integer.parseInt(cantidad.getText());
+            Producto p = tablaProductos.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                db.aniadirCantidad(cant, idMesa, p.getCodigo());
+                cantidad.setText("");
+                cargarTabla();
+            }
+        }
     }
 
     private void cargarTabla() {
         tablaProductos.getItems().clear();
         tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
+        setTotal();
     }
 
     private void addProducto(String nombreProducto) {
@@ -108,7 +147,7 @@ public class PrimaryController {
             public void handle(MouseEvent event) {
                 tablaProductos.getItems().clear();
                 db.borrarMesa(idMesa);
-                db.setOcupada(idMesa,false);
+                db.setOcupada(idMesa, false);
             }
         });
 

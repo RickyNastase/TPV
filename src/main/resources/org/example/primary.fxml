@@ -87,50 +87,77 @@
       <VBox id="VBox" alignment="CENTER" prefHeight="346.0" prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1">
          <StackPane alignment="CENTER" layoutX="20.0" layoutY="55.0">
             <children>
-               <Rectangle fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="151.0" />
-               <Text fx:id="total" text="Total: ">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Text>
+               <Rectangle fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="150.0" />
+               <HBox alignment="CENTER" maxHeight="35.0" maxWidth="150.0" prefHeight="35.0" prefWidth="150.0">
+                  <children>
+                     <Text text="Total: ">
+                        <font>
+                           <Font name="System Bold" size="17.0" />
+                        </font>
+                     </Text>
+                     <Label fx:id="total">
+                        <font>
+                           <Font size="17.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
             </children>
          </StackPane>
 
 
          <!--Região onde ficam os números digitados e os resultados-->
          <StackPane alignment="CENTER">
-            <Rectangle fx:id="cantidad" fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="151.0" />
-            <Text fx:id="total">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Text>
+            <Rectangle fill="TRANSPARENT" height="35.0" stroke="gray" strokeMiterLimit="0.0" width="150.0" />
+            <HBox alignment="CENTER" maxHeight="35.0" maxWidth="150.0" prefHeight="35.0" prefWidth="150.0">
+               <children>
+                  <Text text="Cantidad:">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="7.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Label fx:id="cantidad">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </StackPane>
 
          <!--O HBox coloca os elementos na mesma linha. O próximo elemento sempre entra a direita do anterior-->
          <HBox alignment="CENTER" spacing="10" />
 
          <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="siete" prefWidth="50" text="7" />
-            <Button fx:id="ocho" prefWidth="50" text="8" />
-            <Button fx:id="nueve" prefWidth="50" text="9" />
+            <Button fx:id="siete" onAction="#setCantidad" prefWidth="50" text="7" />
+            <Button fx:id="ocho" onAction="#setCantidad" prefWidth="50" text="8" />
+            <Button fx:id="nueve" onAction="#setCantidad" prefWidth="50" text="9" />
          </HBox>
 
          <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="cuatro" prefWidth="50" text="4" />
-            <Button fx:id="cinco" prefWidth="50" text="5" />
-            <Button fx:id="seis" prefWidth="50" text="6" />
+            <Button fx:id="cuatro" onAction="#setCantidad" prefWidth="50" text="4" />
+            <Button fx:id="cinco" onAction="#setCantidad" prefWidth="50" text="5" />
+            <Button fx:id="seis" onAction="#setCantidad" prefWidth="50" text="6" />
          </HBox>
 
          <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="uno" prefWidth="50" text="1" />
-            <Button fx:id="dos" prefWidth="50" text="2" />
-            <Button fx:id="tres" prefWidth="50" text="3" />
+            <Button fx:id="uno" onAction="#setCantidad" prefWidth="50" text="1" />
+            <Button fx:id="dos" onAction="#setCantidad" prefWidth="50" text="2" />
+            <Button fx:id="tres" onAction="#setCantidad" prefWidth="50" text="3" />
          </HBox>
 
          <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="cero" prefWidth="50.0" text="0" />
-            <Button fx:id="borrar" layoutX="115.0" layoutY="10.0" prefWidth="50.0" text="CE" />
-            <Button fx:id="aceptar" layoutX="114.0" layoutY="10.0" prefWidth="50.0" text="✓" />
+            <Button fx:id="cero" onAction="#setCantidad" prefWidth="50.0" text="0" />
+            <Button fx:id="borrar" layoutX="115.0" layoutY="10.0" onAction="#borrar" prefWidth="50.0" text="CE" />
+         </HBox>
+         <HBox alignment="CENTER" layoutX="20.0" layoutY="239.0" spacing="10">
+            <children>
+               <Button fx:id="eliminar" layoutX="115.0" layoutY="10.0" onAction="#eliminarProducto" prefWidth="50.0" text="X" />
+               <Button fx:id="aceptar" layoutX="114.0" layoutY="10.0" onAction="#aceptar" prefWidth="50.0" text="✓" />
+            </children>
          </HBox>
          <padding>
             <Insets left="10.0" right="10.0" />
