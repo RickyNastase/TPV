@@ -27,21 +27,15 @@ import javafx.scene.text.Text;
 
 public class PrimaryController {
     @FXML
-    private Label fecha;
-    @FXML
-    private Label cantidad;
-    @FXML
-    private Label total;
+    private Label fecha, cantidad, total;
     @FXML
     private TableView<Producto> tablaProductos;
     @FXML
-    private ImageView sala;
-    @FXML
     private GridPane grid;
     @FXML
-    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres, pagar;
+    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres, cobrar, sala;
     private DBHelper db;
-    private int idMesa;
+    private static int idMesa;
 
     @FXML
     private void verSala() {
@@ -81,7 +75,7 @@ public class PrimaryController {
     }
 
     private void setTotal() {
-        total.setText(Double.toString(db.calcularTotal(idMesa)) + "€");
+        total.setText(db.calcularTotal(idMesa) + "€");
     }
 
     @FXML
@@ -123,15 +117,14 @@ public class PrimaryController {
 
     private void addProducto(String nombreProducto) {
         db.addProductoMesa(nombreProducto, idMesa);
-        tablaProductos.getItems().clear();
-        tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
+        cargarTabla();
     }
 
     private void setFecha() {
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentDateTime = dateFormat.format(currentDate);
-        fecha.setText("Fecha: " + currentDateTime);
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String fechaActual = formato.format(date);
+        fecha.setText("Fecha: " + fechaActual);
     }
 
     private void handlers() {
@@ -141,16 +134,13 @@ public class PrimaryController {
                 verSala();
             }
         });
-
-        pagar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        cobrar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 tablaProductos.getItems().clear();
-                db.borrarMesa(idMesa);
-                db.setOcupada(idMesa, false);
+                db.generarFactura(idMesa);
             }
         });
-
         cafes.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

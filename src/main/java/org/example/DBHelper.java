@@ -1,8 +1,14 @@
 package org.example;
 
+import javax.xml.transform.Result;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DBHelper {
     private Connection con;
@@ -14,7 +20,7 @@ public class DBHelper {
 
     private void conexion() {
         try {
-            String db = "tpv";
+            String db = "basedatos";
             String host = "localhost";
             String port = "3306";
             String urlConnection = "jdbc:mysql://" + host + ":" + port + "/" + db;
@@ -23,6 +29,40 @@ public class DBHelper {
             con = DriverManager.getConnection(urlConnection, user, pwd);
             s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generarFactura(int idMesa) {
+        try {
+            double importe = calcularTotal(idMesa);
+            Timestamp fecha = new Timestamp(System.currentTimeMillis());
+
+            PreparedStatement psFactura = con.prepareStatement("insert into factura (mesa,fecha,importe) values (?,?,?)");
+            con.setAutoCommit(false);
+            psFactura.setInt(1, idMesa);
+            psFactura.setTimestamp(2, fecha);
+            psFactura.setDouble(3, importe);
+            psFactura.executeUpdate();
+            con.commit();
+
+            ResultSet rs = s.executeQuery("select id from factura where mesa = " + idMesa + " order by fecha desc limit 1");
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                ResultSet rs2 = s.executeQuery("select * from consumicion where mesa = " + idMesa);
+                while (rs2.next()) {
+                    PreparedStatement ps = con.prepareStatement("insert into detalles_factura (factura,producto,cantidad) values (?,?,?)");
+                    ps.setInt(1, id);
+                    ps.setInt(2, rs2.getInt(3));
+                    ps.setDouble(3, rs2.getInt(4));
+                    ps.executeUpdate();
+                    con.commit();
+                }
+            }
+            con.setAutoCommit(true);
+            borrarMesa(idMesa);
+            setOcupada(idMesa,false);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
