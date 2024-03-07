@@ -4,11 +4,8 @@ import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class DBHelper {
     private Connection con;
@@ -28,6 +25,38 @@ public class DBHelper {
             String pwd = "ricky_sql23";
             con = DriverManager.getConnection(urlConnection, user, pwd);
             s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generarFacturaDiaria(String fecha) {
+        try {
+            String fechaActual = fecha.split(" ")[0];
+            ResultSet rs = s.executeQuery("select sum(importe) from factura where date(fecha) = '" + fechaActual + "'");
+            if (rs.next()) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("fecha", fechaActual);
+                map.put("total", rs.getDouble(1));
+                new GenerarReporte().generarFacturaDiaria(map, con, fechaActual);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generarComprobante(int idMesa) {
+        try {
+            ResultSet datosComprobante = s.executeQuery("select fac.id,fac.fecha,fac.importe from factura fac inner join mesas m on m.id = fac.mesa where fac.fecha = (select fecha from factura where mesa = " + idMesa + " order by fecha desc limit 1);");
+
+            if (datosComprobante.next()) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("idMesa", String.valueOf(idMesa));
+                map.put("idFactura", datosComprobante.getInt(1));
+                map.put("fecha", datosComprobante.getTimestamp(2));
+                map.put("total", datosComprobante.getDouble(3));
+                new GenerarReporte().generarComprobante(map, con, datosComprobante.getInt(1));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,7 +90,7 @@ public class DBHelper {
             }
             con.setAutoCommit(true);
             borrarMesa(idMesa);
-            setOcupada(idMesa,false);
+            setOcupada(idMesa, false);
         } catch (SQLException e) {
             e.printStackTrace();
         }

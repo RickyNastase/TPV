@@ -33,8 +33,9 @@ public class PrimaryController {
     @FXML
     private GridPane grid;
     @FXML
-    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres, cobrar, sala;
+    private ImageView cafes, vinos, refrescos, alcohol, cervezas, desayunos, bocadillos, montaditos, raciones, postres, cobrar, sala, facturar;
     private DBHelper db;
+    private String fechaActual;
     private static int idMesa;
 
     @FXML
@@ -123,7 +124,7 @@ public class PrimaryController {
     private void setFecha() {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String fechaActual = formato.format(date);
+        fechaActual = formato.format(date);
         fecha.setText("Fecha: " + fechaActual);
     }
 
@@ -137,8 +138,20 @@ public class PrimaryController {
         cobrar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (tablaProductos.getItems().size() > 0) {
+                    tablaProductos.getItems().clear();
+                    db.generarFactura(idMesa);
+                    db.generarComprobante(idMesa);
+                    cargarTabla();
+                }
+            }
+        });
+        facturar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
                 tablaProductos.getItems().clear();
-                db.generarFactura(idMesa);
+                db.generarFacturaDiaria(fechaActual);
+                cargarTabla();
             }
         });
         cafes.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
