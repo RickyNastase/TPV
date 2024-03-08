@@ -121,6 +121,10 @@ public class DBHelper {
     public void eliminarConsumicion(int idMesa, int producto) {
         try {
             s.execute("delete from consumicion where mesa = " + idMesa + " and producto = " + producto);
+            ResultSet rs = s.executeQuery("select * from consumicion where mesa = " + idMesa);
+            if (!rs.next()) {
+                setOcupada(idMesa, false);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -117,8 +117,10 @@ public class PrimaryController {
     }
 
     private void addProducto(String nombreProducto) {
-        db.addProductoMesa(nombreProducto, idMesa);
-        cargarTabla();
+        if (idMesa > 0) {
+            db.addProductoMesa(nombreProducto, idMesa);
+            cargarTabla();
+        }
     }
 
     private void setFecha() {
@@ -228,7 +230,7 @@ public class PrimaryController {
                     ImageView img = new ImageView(new Image(imagen.toURI().toString()));
                     img.setFitWidth(60);
                     img.setPreserveRatio(true);
-                    Label nombre = new Label(imagen.getName());
+                    Label nombre = new Label(imagen.getName().split("\\.")[0].toUpperCase());
 
                     img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
