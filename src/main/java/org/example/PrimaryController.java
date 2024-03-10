@@ -1,17 +1,9 @@
 package org.example;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,9 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
+/**
+ * Clase que actuará como programa principal y se encargará de la mayoría de procesos. Está conectado en "primary.fxml".
+ */
 public class PrimaryController {
+    // Se establecen y recogen las variables necesarias.
     @FXML
     private Label fecha, cantidad, total;
     @FXML
@@ -38,6 +33,9 @@ public class PrimaryController {
     private String fechaActual;
     private static int idMesa;
 
+    /**
+     * Método que redirige a "sala.fxml" donde se encuentra la interfaz de las mesas.
+     */
     @FXML
     private void verSala() {
         try {
@@ -47,6 +45,12 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Método que se ejecuta al inicializar la clase.
+     * Se recoge la clase que actúa como intermediaria con la base de datos, el id de la mesa sobre la cual se van a ejecutar los cambios y
+     * se llama a los métodos que queremos que se ejecuten siempre al cargarse esta clase.
+     * Se setea la posición del grid y los elementos que contendrá la tabla de los productos.
+     */
     @FXML
     public void initialize() {
         db = new DBHelper();
@@ -70,15 +74,24 @@ public class PrimaryController {
         cargarTabla();
     }
 
+    /**
+     * Se borra el texto donde se muestra la cantidad de los productos.
+     */
     @FXML
     private void borrar() {
         cantidad.setText("");
     }
 
+    /**
+     * Se establece el importe total de los productos que se encuentran en la tabla como consumición de la mesa en concreto.
+     */
     private void setTotal() {
         total.setText(db.calcularTotal(idMesa) + "€");
     }
 
+    /**
+     * Se elimina el producto que esté seleccionado (si lo está) de la tabla.
+     */
     @FXML
     private void eliminarProducto() {
         Producto p = tablaProductos.getSelectionModel().getSelectedItem();
@@ -88,6 +101,11 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Método llamado por los botones dígitos para establecer la cantidad en el texto. Se va añadiendo al texto los números que se recogen
+     * de cada botón presionado. En caso de ser "0" el primer botón presionado, no se añade.
+     * @param event Evento al presionar los botones.
+     */
     @FXML
     private void setCantidad(ActionEvent event) {
         Button boton = (Button) event.getSource();
@@ -97,6 +115,11 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Si hay un producto de la tabla seleccionado y el texto que contiene la cantidad no está vacío, se establece la nueva cantidad del producto
+     * seleccionado a la cantidad recogida.
+     * Se establece en la base de datos, se limpia el texto y se carga de nuevo la tabla.
+     */
     @FXML
     private void aceptar() {
         if (!cantidad.getText().isEmpty()) {
@@ -110,19 +133,37 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Método encargado de cargar la tabla con los productos de la mesa actual desde la base de datos.
+     * Se setea automáticamente también el importe total de esos productos en la interfaz.
+     */
     private void cargarTabla() {
         tablaProductos.getItems().clear();
         tablaProductos.getItems().addAll(db.getProductosMesa(idMesa));
         setTotal();
     }
 
+    /**
+     * Si hay una mesa seleccionada, se añade el producto como consumicion a la mesa y se vuelve a cargar la tabla con los datos de la misma.
+     * En caso de no haber mesa seleccionada, se muestra el error correspondiente por pantalla.
+     * @param nombreProducto Nombre del producto a añadir.
+     */
     private void addProducto(String nombreProducto) {
         if (idMesa > 0) {
             db.addProductoMesa(nombreProducto, idMesa);
             cargarTabla();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error.");
+            alert.setContentText("No hay ninguna mesa seleccionada.");
+            alert.showAndWait();
         }
     }
 
+    /**
+     * Se setea la fecha y hora actuales en la interfaz.
+     */
     private void setFecha() {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -130,32 +171,52 @@ public class PrimaryController {
         fecha.setText("Fecha: " + fechaActual);
     }
 
+    /**
+     * Método que setea los EventHandler de los botones.
+     */
     private void handlers() {
+        /**
+         * Botón que redirige a la interfaz de la sala.
+         */
         sala.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 verSala();
             }
         });
+        /**
+         * Botón que, si la tabla no está vacía, cobra la mesa en concreto, añade la factura a la base de datos, genera el comprobante y
+         * carga la tabla para mostrarla vaciada de nuevo.
+         * En caso de estar vacía la tabla, se muestra el error correspondiente.
+         */
         cobrar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (tablaProductos.getItems().size() > 0) {
-                    tablaProductos.getItems().clear();
                     db.generarFactura(idMesa);
                     db.generarComprobante(idMesa);
                     cargarTabla();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Error.");
+                    alert.setContentText("No hay productos para cobrar.");
+                    alert.showAndWait();
                 }
             }
         });
+        /**
+         * Botón encargado de generar la factura diaria del día actual.
+         */
         facturar.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                tablaProductos.getItems().clear();
                 db.generarFacturaDiaria(fechaActual);
-                cargarTabla();
             }
         });
+
+        // A partir de aquí se setean los botones para cada imagen de cada categoria de productos. Al pinchar sobre estos, se llama a la función con su
+        // categoria específica para mostrar en el grid los productos relacionados con la misma.
         cafes.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -218,10 +279,18 @@ public class PrimaryController {
         });
     }
 
+    /**
+     * Método encargado de recoger las imágenes de los productos según la categoría especificada y establecerlos en el grid.
+     * Según la categoría se recogen los productos de una carpeta u otra (la carpeta se llama igual que la categoria).
+     * A cada imagen se le establece un evento en el cual, si son pinchadas, se añade el producto seleccionado como consumición de la mesa actual.
+     * Esto se realiza pasando por parámetro al método encargado de añadirlo, el nombre de la imagen sin el ".png", pues en la base de datos
+     * se llama de la misma manera.
+     * @param categoria Categoria de los produtos a mostrar.
+     */
     public void productosGrid(String categoria) {
         try {
             grid.getChildren().clear();
-            File f = new File(getClass().getResource("/imgProductos/" + categoria).toURI());
+            File f = new File(getClass().getResource("/imagenes/" + categoria).toURI());
             File[] imagenes = f.listFiles();
             if (imagenes != null) {
                 int row = 0;

@@ -39,7 +39,7 @@
                   <Line endX="60.0" layoutX="16.0" layoutY="95.0" opacity="0.48" />
                   <ImageView fx:id="sala" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../imgProductos/comedor.png" />
+                        <Image url="@../../imagenes/comedor.png" />
                      </image>
                   </ImageView>
                   <Label text="SALA">
@@ -60,7 +60,7 @@
                <children>
                   <ImageView fx:id="cobrar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../imgProductos/pagar.png" />
+                        <Image url="@../../imagenes/pagar.png" />
                      </image>
                   </ImageView>
                   <Label text="COBRAR">
@@ -81,7 +81,7 @@
                <children>
                   <ImageView fx:id="facturar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../imgProductos/importe.png" />
+                        <Image url="@../../imagenes/importe.png" />
                      </image>
                   </ImageView>
                   <Label text="FACTURAR">
@@ -202,7 +202,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/cafes/capuchino.png" />
+                                    <Image url="@../../imagenes/cafes/capuchino.png" />
                                  </image>
                               </ImageView>
                               <Label text="CAFÉS" />
@@ -218,7 +218,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/vinos.png" />
+                                    <Image url="@../../imagenes/vinos.png" />
                                  </image>
                               </ImageView>
                               <Label text="VINOS" />
@@ -234,7 +234,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/refrescos.png" />
+                                    <Image url="@../../imagenes/refrescos.png" />
                                  </image>
                               </ImageView>
                               <Label text="REFRESCOS" />
@@ -250,7 +250,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/alcohol.png" />
+                                    <Image url="@../../imagenes/alcohol.png" />
                                  </image>
                               </ImageView>
                               <Label text="ALCOHOL" />
@@ -266,7 +266,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                                  <image>
-                                    <Image url="@../../imgProductos/cervezas.png" />
+                                    <Image url="@../../imagenes/cervezas.png" />
                                  </image>
                               </ImageView>
                               <Label text="CERVEZAS" />
@@ -283,7 +283,7 @@
                            <children>
                               <ImageView fx:id="desayunos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/desayunos.png" />
+                                    <Image url="@../../imagenes/desayunos.png" />
                                  </image></ImageView>
                               <Label text="DESAYUNOS" />
                            </children>
@@ -295,7 +295,7 @@
                            <children>
                               <ImageView fx:id="bocadillos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/bocadillos.png" />
+                                    <Image url="@../../imagenes/bocadillos.png" />
                                  </image></ImageView>
                               <Label text="BOCADILLOS" />
                            </children>
@@ -307,7 +307,7 @@
                            <children>
                               <ImageView fx:id="montaditos" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/montaditos.png" />
+                                    <Image url="@../../imagenes/montaditos.png" />
                                  </image></ImageView>
                               <Label text="MONTADITOS" />
                            </children>
@@ -319,7 +319,7 @@
                            <children>
                               <ImageView fx:id="raciones" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/raciones.png" />
+                                    <Image url="@../../imagenes/raciones.png" />
                                  </image></ImageView>
                               <Label text="RACIONES" />
                            </children>
@@ -331,7 +331,7 @@
                            <children>
                               <ImageView fx:id="postres" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../imgProductos/postres/tiramisu.png" />
+                                    <Image url="@../../imagenes/postres/tiramisu.png" />
                                  </image></ImageView>
                               <Label text="POSTRES" />
                            </children>

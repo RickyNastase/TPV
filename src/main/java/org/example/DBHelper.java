@@ -1,20 +1,26 @@
 package org.example;
 
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.Date;
 
+/**
+ * Clase que se encarga de toda la interacción entre la base de datos y las interfaces del programa. Contiene los métodos CRUD necesarios.
+ */
 public class DBHelper {
+    // Se definen las variables de conexión.
     private Connection con;
     private Statement s;
 
+    /**
+     * Constructor de la clase.
+     */
     public DBHelper() {
         conexion();
     }
 
+    /**
+     * Método para conectar con la base de datos local MySQL.
+     */
     private void conexion() {
         try {
             String db = "basedatos";
@@ -30,6 +36,11 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Método que genera un JasperReport de la factura del día recibiendo por parámetro la fecha ctual y recogiendo los datos
+     * de la base de datos, pasándolos como parámetro al reporte a través de un map.
+     * @param fecha Fecha del día actual.
+     */
     public void generarFacturaDiaria(String fecha) {
         try {
             String fechaActual = fecha.split(" ")[0];
@@ -45,6 +56,11 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Método que genera un JasperReport de comprobante recibiendo por parámetro la mesa a la que se le ha cobrado
+     * y recogiendo los datos de la base de datos, pasándolos así por parámetro al reporte a través de un map.
+     * @param idMesa
+     */
     public void generarComprobante(int idMesa) {
         try {
             ResultSet datosComprobante = s.executeQuery("select fac.id,fac.fecha,fac.importe from factura fac inner join mesas m on m.id = fac.mesa where fac.fecha = (select fecha from factura where mesa = " + idMesa + " order by fecha desc limit 1);");
@@ -62,6 +78,12 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Método que añade a la base de datos la nueva factura generada al cobrar una mesa.
+     * Al final, llama a otro método interno más para borrar la mesa de la tabla de consumicion pues
+     * ya ha sido cobrada y que se establezca como disponible.
+     * @param idMesa Mesa que ha sido cobrada.
+     */
     public void generarFactura(int idMesa) {
         try {
             double importe = calcularTotal(idMesa);
@@ -90,12 +112,17 @@ public class DBHelper {
             }
             con.setAutoCommit(true);
             borrarMesa(idMesa);
-            setOcupada(idMesa, false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Método que calcula el importe total actual que tiene la mesa pasada por parámetro sumando los precios de los productos de la base de datos
+     * que posee la mesa por la cantidad de cada uno.
+     * @param idMesa Mesa para calcular los productos que está consumiendo.
+     * @return double Devuelve el precio total de los productos de la mesa.
+     */
     public double calcularTotal(int idMesa) {
         double total = 0;
         try {
@@ -118,6 +145,12 @@ public class DBHelper {
         return total;
     }
 
+    /**
+     * Se elimina de la tabla consumicion de la base de datos un producto asociado a una mesa.
+     * Luego se comprueba que, si no tiene consumiciones la mesa, se establezca como disponible.
+     * @param idMesa Mesa en la que se encuentra el producto.
+     * @param producto El producto en concreto para eliminar.
+     */
     public void eliminarConsumicion(int idMesa, int producto) {
         try {
             s.execute("delete from consumicion where mesa = " + idMesa + " and producto = " + producto);
@@ -130,6 +163,12 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Se añade en la tabla consumicion la nueva cantidad del producto de la mesa especificados.
+     * @param cantidad Nueva cantidad del producto.
+     * @param idMesa Mesa en la que está el producto.
+     * @param producto El producto a modificar.
+     */
     public void aniadirCantidad(int cantidad, int idMesa, int producto) {
         try {
             s.execute("update consumicion set cantidad = " + cantidad + " where mesa = " + idMesa + " and producto = " + producto);
@@ -138,14 +177,24 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Borrar la mesa especificada de la tabla de consumicion y establecerla como disponible por ende.
+     * @param idMesa Mesa a borrar.
+     */
     public void borrarMesa(int idMesa) {
         try {
             s.execute("delete from consumicion where mesa = " + idMesa);
+            setOcupada(idMesa, false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Devuelve el estado de disponibilidad de la mesa.
+     * @param idMesa Mesa en concreto.
+     * @return boolean Si está ocupada devuelve true, si está libre devuelve false.
+     */
     public boolean getOcupada(int idMesa) {
         try {
             ResultSet rs = s.executeQuery("select ocupada from mesas where id = " + idMesa);
@@ -158,6 +207,11 @@ public class DBHelper {
         return false;
     }
 
+    /**
+     * Establece la mesa especificada como ocupada o libre.
+     * @param idMesa Mesa en concreto.
+     * @param ocupada Booleano. Si es true se establece a ocupada, si es false se establece como libre.
+     */
     public void setOcupada(int idMesa, boolean ocupada) {
         try {
             s.execute("update mesas set ocupada = " + ocupada + " where id = " + idMesa);
@@ -166,6 +220,12 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Se añade un producto a la consumicion de la mesa.
+     * Al tener un producto ya consumiendo, se establece la mesa como ocupada.
+     * @param nombre Nombre del producto a añadir.
+     * @param mesa Mesa en la que se añade.
+     */
     public void addProductoMesa(String nombre, int mesa) {
         try {
             ResultSet rs1 = s.executeQuery("select codigo from productos where nombre like '" + nombre + "'");
@@ -183,6 +243,11 @@ public class DBHelper {
         }
     }
 
+    /**
+     * Si la mesa contiene productos en la tabla consumicion, se devuelven en una lista.
+     * @param idMesa Mesa en concreto.
+     * @return List<Producto> Lista de productos que está consumiendo la mesa actualmente.
+     */
     public List<Producto> getProductosMesa(int idMesa) {
         List<Producto> productos = new ArrayList<>();
         try {

@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="550.0" fitWidth="800.0" pickOnBounds="true" StackPane.alignment="CENTER">
          <image>
-            <Image url="@../../imgProductos/sala.png" />
+            <Image url="@../../imagenes/sala.png" />
          </image>
       </ImageView>
       <Button fx:id="mesa1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#mesaSeleccionada" styleClass="mesas" text="1">

@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Clase objeto que representa los productos y sus características que se consumen en el establecimiento.
+ */
 public class Producto {
     private int codigo;
     private String nombre;
@@ -7,6 +10,14 @@ public class Producto {
     private String categoria;
     private int cantidad;
 
+    /**
+     * Constructor parametrizado.
+     * @param codigo Número identificador del producto.
+     * @param nombre Nombre del producto.
+     * @param precio Precio del producto.
+     * @param categoria Categoria a la que pertenece.
+     * @param cantidad Cantidad de productos consumidos de este tipo.
+     */
     public Producto(int codigo, String nombre, double precio, String categoria,int cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;

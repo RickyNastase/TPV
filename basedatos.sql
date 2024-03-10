@@ -157,26 +157,3 @@ insert into mesas values
 (9,false),
 (10,false),
 (11,false);
-
-select * from consumicion;
-select * from mesas;
-select * from factura;
-select * from detalles_factura;
-
-select p.nombre,det.cantidad,p.precio from detalles_factura det
-inner join factura fac on fac.id = det.factura 
-inner join productos p on p.codigo = det.producto
-where fac.fecha = (select fecha from factura where mesa = 2 order by fecha desc limit 1);
-
-select fac.id,fac.fecha,fac.importe from factura fac 
-inner join mesas m on m.id = fac.mesa
-where fac.fecha = (select fecha from factura where mesa = 2 order by fecha desc limit 1);
-
-select fac.mesa,p.nombre,det.cantidad,p.precio from detalles_factura det 
-inner join factura fac on fac.id = det.factura
-inner join productos p on p.codigo = det.producto
-where date(fac.fecha) = '2024-03-07';
-
-
-
-
