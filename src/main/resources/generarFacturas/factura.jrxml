@@ -85,7 +85,7 @@ where date(fac.fecha) =  $P{fecha}]]>
 		<band height="164" splitType="Stretch">
 			<image>
 				<reportElement x="10" y="0" width="140" height="140" uuid="5dd8282a-97bc-482c-9f5c-7548dc98f17d"/>
-				<imageExpression><![CDATA["C:/Users/ricky/OneDrive/Escritorio/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["src/main/resources/imagenes/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="196" y="10" width="163" height="40" uuid="1218e077-df0c-4d65-bf0c-b3adfb74d0bd"/>

@@ -4,12 +4,10 @@
      -fx-background-radius: 5 5 5 5;
      -fx-border-radius: 5 5 5 5;
 }
-
 .mesas{
     -fx-background-color: transparent;
     -fx-font-size: 25px;
 }
-
 * {
 	-fx-grey-color: #b9b9b9;
 	-fx-light-grey-color: #d1d1d1;
@@ -33,7 +31,6 @@
 .table-row-cell:filled:selected .table-cell {
 	-fx-text-fill: black;
 }
-
 .button{
     -fx-background-color: khaki;
 	-fx-border-color: -fx-grey-color;
