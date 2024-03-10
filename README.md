@@ -22,7 +22,4 @@ Creación y generación de facturas diarias y comprobantes e implementación de 
 Más funciones y estilos implementados e interfaces prácticamente terminadas.
 
 ### Versión 0.1.6 (10/03/2024)
-Últimos cambios en el proyecto sobre detalles.
-
-### Versión 0.1.7 (10/03/2024)
 Proyecto finalizado con todas las funcionalidades integradas y comprobaciones de errores realizadas.
